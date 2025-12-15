@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HeartGuard - Advanced Disease Search Engine</title>
+    <!-- Load Google Fonts for premium typography -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+
+<body>
+
+    <!-- WASM Loader Shim -->
+    <!-- The user needs to build 'SearchEngine.js' from C++ which will be loaded here dynamically or via script tag -->
+    <!-- We will inject the script tag dynamically in JS once we know the file exists, or just put it here -->
+    <!-- We will inject the script tag dynamically in JS once we know the file exists, or just put it here -->
+    <script src="script.js"></script>
+    <script src="project.js"></script>
+
+    <div class="app-container">
+
+        <!-- SIDEBAR NAVIGATION -->
+        <nav class="sidebar">
+            <div class="logo">
+                <i class="fa-solid fa-heart-pulse"></i> HeartGuard
+            </div>
+            <ul>
+                <li class="active" onclick="showSection('home')"><i class="fa-solid fa-house"></i> Home</li>
+                <li onclick="showSection('search')"><i class="fa-solid fa-magnifying-glass"></i> Disease Search</li>
+                <li onclick="showSection('checker')"><i class="fa-solid fa-user-doctor"></i> Symptom AI</li>
+                <li onclick="showSection('nearest')"><i class="fa-solid fa-map-location-dot"></i> Nearest Hospital</li>
+                <li onclick="showSection('recommend')"><i class="fa-solid fa-star"></i> Top Hospitals</li>
+            </ul>
+            <div class="status-indicator">
+                <span id="system-status" class="status offline">● System Loading...</span>
+            </div>
+        </nav>
+
+        <!-- MAIN CONTENT AREA -->
+        <main class="content">
+
+            <!-- SECTION: HOME -->
+            <section id="home" class="active-section">
+                <div class="hero">
+                    <h1>Advanced Cardiac Intelligence</h1>
+                    <p>Powered by C++ Algorithms & WebAssembly</p>
+                    <div class="hero-cards">
+                        <div class="card" onclick="showSection('search')">
+                            <i class="fa-solid fa-book-medical"></i>
+                            <h3>Disease Library</h3>
+                            <p>Linked List Storage</p>
+                        </div>
+                        <div class="card" onclick="showSection('checker')">
+                            <i class="fa-solid fa-microscope"></i>
+                            <h3>Symptom AI</h3>
+                            <p>Max Heap Prediction</p>
+                        </div>
+                        <div class="card" onclick="showSection('nearest')">
+                            <i class="fa-solid fa-truck-medical"></i>
+                            <h3>Rapid Response</h3>
+                            <p>Dijkstra Shortest Path</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION: DISEASE SEARCH (Feature 1) -->
+            <section id="search" style="display:none;">
+                <div class="header">
+                    <h2><i class="fa-solid fa-database"></i> Disease Encyclopedia</h2>
+                    <p>Select a condition to view detailed structure node data.</p>
+                </div>
+                <div class="control-panel">
+                    <select id="disease-dropdown">
+                        <option value="" disabled selected>Select a Heart Disease...</option>
+                        <!-- Populated by C++ -->
+                    </select>
+                    <button class="btn-primary" onclick="loadDiseaseDetails()">View Details</button>
+                </div>
+
+                <div id="disease-result" class="result-card hidden">
+                    <h3 id="d-name">--</h3>
+                    <div class="badge-row">
+                        <span class="badge severity" id="d-severity">Severity: --</span>
+                    </div>
+                    <p id="d-desc" class="description">--</p>
+
+                    <div class="two-col">
+                        <div class="col">
+                            <h4><i class="fa-solid fa-triangle-exclamation"></i> Symptoms</h4>
+                            <ul id="d-symptoms"></ul>
+                        </div>
+                        <div class="col">
+                            <h4><i class="fa-solid fa-shield-heart"></i> Preventions</h4>
+                            <ul id="d-preventions"></ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION: SYMPTOM CHECKER (Feature 2) -->
+            <section id="checker" style="display:none;">
+                <div class="header">
+                    <h2><i class="fa-solid fa-clipboard-check"></i> Symptom Checker AI</h2>
+                    <p>Enter your symptoms to analyze potential matches using Priority Queues.</p>
+                </div>
+
+                <div class="input-group" style="flex-direction: column; align-items: flex-start;">
+                    <label style="margin-bottom: 15px; color: var(--text-muted);">Select your symptoms:</label>
+                    <div id="symptoms-container" class="checkbox-grid">
+                        <!-- Checkboxes injected by C++ -->
+                        <p style="color: var(--text-muted); font-style: italic;">Loading symptoms...</p>
+                    </div>
+                    <button class="btn-accent" onclick="runPrediction()" style="margin-top: 20px; width: 100%;">Analyze
+                        Health Status</button>
+                </div>
+
+                <div id="prediction-results" class="grid-results">
+                    <!-- Results injected here -->
+                </div>
+            </section>
+
+            <!-- SECTION: NEAREST HOSPITAL (Feature 3) -->
+            <section id="nearest" style="display:none;">
+                <div class="header">
+                    <h2><i class="fa-solid fa-route"></i> Intelligent Routing</h2>
+                    <p>Find the absolute nearest facility using Dijkstra's Algorithm.</p>
+                </div>
+
+                <div class="control-panel">
+                    <label>Current Location:</label>
+                    <select id="area-dropdown">
+                        <!-- Populated by C++ -->
+                    </select>
+                    <button class="btn-primary" onclick="findNearestHospital()">Find Path</button>
+                </div>
+
+                <div id="route-result" class="result-card hidden">
+                    <div class="route-header">
+                        <div>
+                            <h3>Nearest: <span id="n-hospital" class="highlight">--</span></h3>
+                            <p>Distance: <span id="n-dist">--</span> km</p>
+                        </div>
+                        <i class="fa-solid fa-location-arrow icon-large"></i>
+                    </div>
+                    <div class="path-viz">
+                        <h4><i class="fa-solid fa-diamond-turn-right"></i> Optimization Path</h4>
+                        <div id="n-path" class="path-steps">
+                            <!-- Steps e.g. G-10 -> G-9 -> PIMS -->
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION: RECOMMENDATIONS (Feature 4) -->
+            <section id="recommend" style="display:none;">
+                <div class="header">
+                    <h2><i class="fa-solid fa-ranking-star"></i> Top Rated Hospitals</h2>
+                    <p>Ranked by Min-Heap Logic (Distance + Quality Score).</p>
+                </div>
+
+                <div class="control-panel">
+                    <button class="btn-primary" onclick="getTopHospitals()">Refresh Rankings</button>
+                </div>
+
+                <div class="table-container">
+                    <table class="modern-table">
+                        <thead>
+                            <tr>
+                                <th>Rank</th>
+                                <th>Hospital Name</th>
+                                <th>Location</th>
+                                <th>Rating</th>
+                                <th>Distance</th>
+                                <th>Algorithmic Score</th>
+                            </tr>
+                        </thead>
+                        <tbody id="rec-table-body">
+                            <!-- Populated -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+</body>
+
+</html>
