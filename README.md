@@ -61,11 +61,6 @@ Start the local Python server to view the app in your browser.
 ```
 The app will open automatically at `http://localhost:8000`.
 
-## 🤝 Contributing
-1. Fork the repository.
-2. Create a new branch (`git checkout -b feature-branch`).
-3. Commit your changes.
-4. Push to the branch and open a Pull Request.
-
 ---
 *Developed as a Data Structures & Algorithms Semester Project.*
+
